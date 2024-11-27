@@ -1,0 +1,7 @@
+[path]
+app = ".blockchain"
+private_key = "keys/private.pem"
+public_key = "keys/public.pem"
+
+[crypto]
+rsa_bits = 2048
