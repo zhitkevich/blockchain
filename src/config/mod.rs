@@ -1,5 +1,7 @@
+use crate::net::Node;
 pub use error::Error;
 use std::path::PathBuf;
+use std::time::Duration;
 use std::{env, fs};
 
 mod error;
@@ -8,6 +10,7 @@ mod raw;
 #[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
 pub struct Config {
 	pub path: path::Config,
+	pub network: network::Config,
 	pub crypto: crypto::Config,
 }
 
@@ -22,6 +25,11 @@ impl Config {
 
 		Ok(Self {
 			path: path::Config { app, private_key, public_key },
+			network: network::Config {
+				port: raw_config.network.port,
+				seed_nodes: raw_config.network.seed_nodes.iter().map(|n| Node::new(n)).collect(),
+				ping_interval: Duration::from_millis(raw_config.network.ping_interval),
+			},
 			crypto: crypto::Config { rsa_bits: raw_config.crypto.rsa_bits },
 		})
 	}
@@ -35,6 +43,18 @@ pub mod path {
 		pub app: PathBuf,
 		pub private_key: PathBuf,
 		pub public_key: PathBuf,
+	}
+}
+
+pub mod network {
+	use crate::net::Node;
+	use std::time::Duration;
+
+	#[derive(Clone, Eq, PartialEq, Ord, PartialOrd, Hash, Debug, Default)]
+	pub struct Config {
+		pub port: u16,
+		pub seed_nodes: Vec<Node>,
+		pub ping_interval: Duration,
 	}
 }
 

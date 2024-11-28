@@ -3,5 +3,10 @@ app = ".blockchain"
 private_key = "keys/private.pem"
 public_key = "keys/public.pem"
 
+[network]
+port = 8080
+seed_nodes = ["127.0.0.1:8081"]
+ping_interval = 5000
+
 [crypto]
 rsa_bits = 2048
