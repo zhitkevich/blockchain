@@ -1,7 +1,6 @@
+pub use error::Error;
 use std::path::PathBuf;
 use std::{env, fs};
-
-pub use error::Error;
 
 mod error;
 mod raw;

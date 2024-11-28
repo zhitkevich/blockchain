@@ -9,7 +9,6 @@ fn main() {
 	env_logger::init();
 
 	let config = Config::new().unwrap();
-
 	let rsa = Rsa::generate(config.crypto.rsa_bits).unwrap();
 	let private_key = rsa.private_key_to_pem().unwrap();
 	let public_key = rsa.public_key_to_pem().unwrap();
